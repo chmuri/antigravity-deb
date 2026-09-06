@@ -1,0 +1,101 @@
+Package: antigravity
+Version: 2.0.0
+Architecture: amd64
+Maintainer: Antigravity Community <antigravity-deb@users.noreply.github.com>
+Installed-Size: 509928
+Depends: ca-certificates, xdg-utils, desktop-file-utils, libnss3, libasound2t64 | libasound2, libgtk-3-0
+Recommends: python3-nautilus
+Filename: https://github.com/chmuri/antigravity-deb/releases/download/antigravity-v2.0.0/antigravity_2.0.0_amd64.deb
+Size: 144183632
+MD5sum: 4a546877cc2d69727a91b2ddc39c4e7e
+SHA1: 6ca9ab7b8777a51d670cb0a250d1a54fcc3dee1d
+SHA256: 89903878ed73e8ed754d52c2d7d4bd42853004d7b1df5ba399de7b2d4423ac88
+Section: devel
+Priority: optional
+Homepage: https://antigravity.google
+Description: Google Antigravity 2.0 - Agentic AI Development Platform
+ Google Antigravity 2.0 is an advanced desktop agent platform designed for
+ autonomous AI engineering, multi-agent orchestration, and developer workflows.
+ .
+ This package contains the official Antigravity 2.0 desktop application for Linux,
+ packaged into standard Debian/Ubuntu format with desktop integration, icons,
+ and sandbox security configurations.
+ .
+ Upstream releases: https://antigravity.google
+ Package repository: https://github.com/chmuri/antigravity-deb
+
+Package: antigravity
+Version: 2.12.2
+Architecture: amd64
+Maintainer: Antigravity Community <antigravity-deb@users.noreply.github.com>
+Installed-Size: 513712
+Depends: ca-certificates, xdg-utils, desktop-file-utils, libnss3, libasound2t64 | libasound2, libgtk-3-0
+Recommends: python3-nautilus
+Filename: https://github.com/chmuri/antigravity-deb/releases/download/antigravity-v2.12.2/antigravity_2.12.2_amd64.deb
+Size: 138576108
+MD5sum: a9084a2170dfb8579b507806aa8435d2
+SHA1: 0885751fb8c59495af8e8142e3f96765531679d1
+SHA256: 45115e0acb65a5b1218fdf2892298f0d1deda4a92946471f98df0d7975fe5350
+Section: devel
+Priority: optional
+Homepage: https://antigravity.google
+Description: Google Antigravity 2.0 - Agentic AI Development Platform
+ Google Antigravity 2.0 is an advanced desktop agent platform designed for
+ autonomous AI engineering, multi-agent orchestration, and developer workflows.
+ .
+ This package contains the official Antigravity 2.0 desktop application for Linux,
+ packaged into standard Debian/Ubuntu format with desktop integration, icons,
+ and sandbox security configurations.
+ .
+ Upstream releases: https://antigravity.google
+ Package repository: https://github.com/chmuri/antigravity-deb
+
+Package: antigravity-ide
+Version: 2.0.1
+Architecture: amd64
+Maintainer: Antigravity Community <antigravity-deb@users.noreply.github.com>
+Installed-Size: 779640
+Depends: ca-certificates, xdg-utils, desktop-file-utils, libnss3, libasound2t64 | libasound2, libgtk-3-0
+Recommends: python3-nautilus
+Filename: https://github.com/chmuri/antigravity-deb/releases/download/antigravity-ide-v2.0.1/antigravity-ide_2.0.1_amd64.deb
+Size: 179609288
+MD5sum: c5e75bac299ffd37f147c49b5d4efd40
+SHA1: f245f2ce9b96b73d2d75883c1ef47114eef02c49
+SHA256: db9d2053f0bfe67d6237306e23567c27fa6199a1ba64fad798e3af886ff433b3
+Section: devel
+Priority: optional
+Homepage: https://antigravity.google
+Description: Google Antigravity IDE - Agent-First Development Environment
+ Google Antigravity IDE is a next-generation integrated development environment
+ optimized for AI pair-programming, agent collaboration, and codebase intelligence.
+ .
+ This package contains the official Antigravity IDE for Linux, complete with
+ desktop shortcuts, icons, and GNOME Files (Nautilus) file manager integration.
+ .
+ Upstream releases: https://antigravity.google
+ Package repository: https://github.com/chmuri/antigravity-deb
+
+Package: antigravity-ide
+Version: 2.5.5
+Architecture: amd64
+Maintainer: Antigravity Community <antigravity-deb@users.noreply.github.com>
+Installed-Size: 793296
+Depends: ca-certificates, xdg-utils, desktop-file-utils, libnss3, libasound2t64 | libasound2, libgtk-3-0
+Recommends: python3-nautilus
+Filename: https://github.com/chmuri/antigravity-deb/releases/download/antigravity-ide-v2.5.5/antigravity-ide_2.5.5_amd64.deb
+Size: 176376256
+MD5sum: 2fe79aab16352a83383f7067d47d8a20
+SHA1: f18b20cec44e63e6dfac4967ce1589d6cb16cb6a
+SHA256: 6c79056ff0727f06aa519ed480e187e55f6a0db079b1536a17cc17a0910dfed6
+Section: devel
+Priority: optional
+Homepage: https://antigravity.google
+Description: Google Antigravity IDE - Agent-First Development Environment
+ Google Antigravity IDE is a next-generation integrated development environment
+ optimized for AI pair-programming, agent collaboration, and codebase intelligence.
+ .
+ This package contains the official Antigravity IDE for Linux, complete with
+ desktop shortcuts, icons, and GNOME Files (Nautilus) file manager integration.
+ .
+ Upstream releases: https://antigravity.google
+ Package repository: https://github.com/chmuri/antigravity-deb
