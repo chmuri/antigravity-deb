@@ -115,24 +115,7 @@ jobs:
               BUILT_COUNT=$((BUILT_COUNT + 1))
               DEB_FILE="$(find deb-dist -name "${pkg}_${ver}*amd64.deb" | head -n 1)"
               if [ -n "$DEB_FILE" ] && [ -f "$DEB_FILE" ]; then
-                SHA256="$(sha256sum "$DEB_FILE" | awk '{print $1}')"
-                TAG="${pkg}-v${ver}"
-                TITLE="Google $prod v$ver"
-                if [ "$prod" = "desktop" ]; then
-                  TITLE="Google Antigravity 2.0 v$ver"
-                else
-                  TITLE="Google Antigravity IDE v$ver"
-                fi
-
-                echo ">>> Creating GitHub Release $TAG..."
-                DEB_BASENAME="$(basename "$DEB_FILE")"
-                python3 scripts/make_release_notes.py "$TITLE" "$DEB_BASENAME" "$SHA256" "$build_id" "$url" "$pkg" release_notes.md
-
-                gh release delete "$TAG" --yes --repo "$GITHUB_REPOSITORY" 2>/dev/null || true
-                gh release create "$TAG" "$DEB_FILE" \
-                  --title "$TITLE" \
-                  --notes-file release_notes.md \
-                  --repo "$GITHUB_REPOSITORY" || echo "Warning: Failed creating GitHub release $TAG"
+                echo ">>> Built $pkg v$ver: $(basename "$DEB_FILE") (will be published to the rolling 'stable' release below)"
               fi
             else
               echo "::error::Failed to build $pkg v$ver"
@@ -157,7 +140,7 @@ jobs:
             cp -f deb-dist/*.deb repo-dist/
           fi
 
-          # Pull every historical .deb from the per-version release tags so the
+          # Pull every .deb published on the rolling 'stable' release so the
           # flat index stays cumulative across runs.
           python3 scripts/sync_release_assets.py repo-dist
 

@@ -6,7 +6,7 @@
 [![Architectures](https://img.shields.io/badge/Architectures-amd64-success)](#supported-architectures)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-Official-grade, automated Debian and Ubuntu package repository for **Google Antigravity 2.0** and **Google Antigravity IDE**.
+Automated Debian and Ubuntu package repository (unofficial) for **Google Antigravity 2.0** and **Google Antigravity IDE**, built from official Google distribution tarballs.
 
 Packages are automatically discovered, built from official Google distribution tarballs, cryptographically signed with GPG, and synchronized to this repository **twice daily** (at 04:00 and 16:00 UTC) via GitHub Actions.
 
@@ -36,7 +36,7 @@ Types: deb
 URIs: https://github.com/chmuri/antigravity-deb/releases/download/stable
 Suites: ./
 Signed-By: /etc/apt/keyrings/antigravity.gpg
-Description: Google Antigravity (unofficial) - Antigravity 2.0 AI desktop agent and Antigravity IDE, packaged from official Google releases
+Description: Google Antigravity (unofficial) - Antigravity 2.0 AI desktop agent and Antigravity IDE
 EOF
 
 # 4. Update index and install
@@ -82,15 +82,18 @@ sudo apt-get --only-upgrade install antigravity antigravity-ide
 
 ## 📥 Direct `.deb` Manual Downloads
 
-If you prefer installing individual `.deb` packages without adding the APT repository:
+All `.deb` packages (every published version, for both `antigravity` and `antigravity-ide`) are stored on the single rolling [`stable` GitHub Release](https://github.com/chmuri/antigravity-deb/releases/tag/stable). If you prefer installing individual `.deb` files without adding the APT repository:
 
-1. Browse to [GitHub Releases](https://github.com/chmuri/antigravity-deb/releases).
-2. Download the desired `.deb` package (e.g. `antigravity_2.12.2_amd64.deb` or `antigravity-ide_2.5.5_amd64.deb`).
-3. Install using `apt`:
-   ```bash
-   sudo apt install ./antigravity_*_amd64.deb
-   sudo apt install ./antigravity-ide_*_amd64.deb
-   ```
+```bash
+# Examples — pick the exact file you want from the release page
+curl -fLO https://github.com/chmuri/antigravity-deb/releases/download/stable/antigravity_2.12.2_amd64.deb
+curl -fLO https://github.com/chmuri/antigravity-deb/releases/download/stable/antigravity-ide_2.5.5_amd64.deb
+
+sudo apt install ./antigravity_*_amd64.deb
+sudo apt install ./antigravity-ide_*_amd64.deb
+```
+
+SHA256 checksums are listed on the release page for each asset.
 
 ---
 
@@ -118,10 +121,9 @@ Google Upstream (antigravity.google/download)
 GitHub Actions (Runs 2x daily: 04:00 & 16:00 UTC)
         ├─► discover_versions.py (Detects new versions & historical releases)
         ├─► build_deb.sh         (Packages .deb according to Debian policy)
-        ├─► Per-version GitHub Releases (Store heavy .deb binaries & SHA256 checksums)
         ├─► update_repo.sh       (Builds flat Packages/Release, signs InRelease with GPG)
-        └─► Rolling GitHub Release tag "stable"
-               (Serves .deb files + signed flat repository indexes)
+        └─► Single rolling GitHub Release tag "stable"
+               (Serves all .deb files + signed flat repository indexes)
                 │
                 ▼
 Ubuntu / Debian Clients (apt-get update && apt-get install antigravity)
