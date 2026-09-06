@@ -2,21 +2,23 @@
 # update_repo.sh - Generates APT repository metadata (Packages, Packages.gz, Release, InRelease)
 set -euo pipefail
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PARENT_DIR="$(dirname "$SCRIPT_DIR")"
+
 REPO_DIR="${1:-/output}"
 GITHUB_REPO="${GITHUB_REPO:-chmuri/antigravity-deb}"
 GPG_KEY_ID="${GPG_KEY_ID:-18EBB53D09F5866F73EB94CF81435F158DF507A0}"
 
 mkdir -p "$REPO_DIR"
-cd "$REPO_DIR"
 
 # Copy public.key if present in source tree or repo
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PARENT_DIR="$(dirname "$SCRIPT_DIR")"
 if [ -f "$PARENT_DIR/public.key" ]; then
   cp -f "$PARENT_DIR/public.key" "$REPO_DIR/public.key"
 elif [ -f "/public.key" ]; then
   cp -f "/public.key" "$REPO_DIR/public.key"
 fi
+
+cd "$REPO_DIR"
 
 DEB_COUNT="$(find . -maxdepth 2 -name "*.deb" | wc -l)"
 if [ "$DEB_COUNT" -eq 0 ] && [ ! -f "Packages" ]; then
@@ -46,7 +48,7 @@ else
 fi
 
 # If GITHUB_REPO is provided, transform Filename to GitHub Releases direct asset URL
-python3 - "$REPO_DIR/Packages.raw" "$REPO_DIR/Packages.new" "$GITHUB_REPO" <<'PY'
+python3 - "Packages.raw" "Packages.new" "$GITHUB_REPO" <<'PY'
 import re, sys
 from pathlib import Path
 

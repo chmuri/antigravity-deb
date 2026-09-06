@@ -27,6 +27,7 @@ if [ "$PRODUCT" = "desktop" ]; then
   PKG_NAME="antigravity"
   PKG_TITLE="Google Antigravity 2.0"
   PKG_SHORT_DESC="Google Antigravity 2.0 - Agentic AI Development Platform"
+  PKG_DESC="$PKG_SHORT_DESC"
   PKG_LONG_DESC=" Google Antigravity 2.0 is an advanced desktop agent platform designed for
  autonomous AI engineering, multi-agent orchestration, and developer workflows.
  .
@@ -42,6 +43,7 @@ elif [ "$PRODUCT" = "ide" ]; then
   PKG_NAME="antigravity-ide"
   PKG_TITLE="Google Antigravity IDE"
   PKG_SHORT_DESC="Google Antigravity IDE - Agent-First Development Environment"
+  PKG_DESC="$PKG_SHORT_DESC"
   PKG_LONG_DESC=" Google Antigravity IDE is a next-generation integrated development environment
  optimized for AI pair-programming, agent collaboration, and codebase intelligence.
  .
