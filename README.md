@@ -25,8 +25,8 @@ sudo install -m 0755 -d /etc/apt/keyrings
 curl -fsSL https://chmuri.github.io/antigravity-deb/public.key | sudo gpg --dearmor -o /etc/apt/keyrings/antigravity.gpg
 sudo chmod a+r /etc/apt/keyrings/antigravity.gpg
 
-# 3. Add the APT source repository
-echo "deb [signed-by=/etc/apt/keyrings/antigravity.gpg] https://chmuri.github.io/antigravity-deb/ ./" | sudo tee /etc/apt/sources.list.d/antigravity.list
+# 3. Add the APT source repository (stable main)
+echo "deb [signed-by=/etc/apt/keyrings/antigravity.gpg] https://chmuri.github.io/antigravity-deb stable main" | sudo tee /etc/apt/sources.list.d/antigravity.list
 
 # 4. Update index and install
 sudo apt-get update
@@ -35,7 +35,7 @@ sudo apt-get install -y antigravity antigravity-ide
 
 ### ⚡ One-Liner Setup
 ```bash
-curl -fsSL https://chmuri.github.io/antigravity-deb/public.key | sudo gpg --dearmor -o /etc/apt/keyrings/antigravity.gpg && sudo chmod a+r /etc/apt/keyrings/antigravity.gpg && echo "deb [signed-by=/etc/apt/keyrings/antigravity.gpg] https://chmuri.github.io/antigravity-deb/ ./" | sudo tee /etc/apt/sources.list.d/antigravity.list && sudo apt-get update
+curl -fsSL https://chmuri.github.io/antigravity-deb/public.key | sudo gpg --dearmor -o /etc/apt/keyrings/antigravity.gpg && sudo chmod a+r /etc/apt/keyrings/antigravity.gpg && echo "deb [signed-by=/etc/apt/keyrings/antigravity.gpg] https://chmuri.github.io/antigravity-deb stable main" | sudo tee /etc/apt/sources.list.d/antigravity.list && sudo apt-get update
 ```
 
 ---
