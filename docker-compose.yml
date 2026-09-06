@@ -1,0 +1,19 @@
+services:
+  antigravity-deb:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: antigravity-deb-builder:latest
+    container_name: antigravity-deb-repo
+    restart: unless-stopped
+    volumes:
+      - ./dist:/output
+    environment:
+      - ARCH=amd64            # amd64 or arm64
+      - PRODUCT=all           # all, desktop, or ide
+      - BUILD_MODE=all        # all (historical + latest) or latest (latest only)
+      - CHECK_INTERVAL=3600   # interval in seconds to check for new releases
+      - HTTP_PORT=8080
+    ports:
+      - "8080:8080"           # Optional: exposes APT HTTP repository
+    command: ["serve"]        # Modes: serve (watch + HTTP server), watch (daemon), build-all, build-latest, check
