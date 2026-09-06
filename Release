@@ -1,0 +1,15 @@
+Origin: Google Antigravity Repository
+Label: Antigravity Packages
+Suite: stable
+Codename: stable
+Components: main
+Architectures: amd64 arm64
+Date: Sun, 06 Sep 2026 15:09:42 +0000
+Description: Unofficial Debian/Ubuntu APT repository for Google Antigravity 2.0 and Antigravity IDE
+MD5Sum:
+ e61942ceff798c187e6ccae098731b03 4752 Packages
+ 3392f40f88a3b0e319337fca6db5b727 1256 Packages.gz
+SHA256:
+ 53e547fc9021bc1c5ad79ae756693403626c682e5695ca9c3fd11b6b8d3aee52 4752 Packages
+ c02536ef5a0a553f3bb25fc12871ce3fbd4e3eea62cd5fef62cf6dc7a7074985 1256 Packages.gz
+ 89ff1ccbd0c6fb392b98ce0806233cfbfddc568f384d90d019bdcc9263ec3f2e 1292 Packages.xz

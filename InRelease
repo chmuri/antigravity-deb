@@ -1,0 +1,34 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Origin: Google Antigravity Repository
+Label: Antigravity Packages
+Suite: stable
+Codename: stable
+Components: main
+Architectures: amd64 arm64
+Date: Sun, 06 Sep 2026 15:09:42 +0000
+Description: Unofficial Debian/Ubuntu APT repository for Google Antigravity 2.0 and Antigravity IDE
+MD5Sum:
+ e61942ceff798c187e6ccae098731b03 4752 Packages
+ 3392f40f88a3b0e319337fca6db5b727 1256 Packages.gz
+SHA256:
+ 53e547fc9021bc1c5ad79ae756693403626c682e5695ca9c3fd11b6b8d3aee52 4752 Packages
+ c02536ef5a0a553f3bb25fc12871ce3fbd4e3eea62cd5fef62cf6dc7a7074985 1256 Packages.gz
+ 89ff1ccbd0c6fb392b98ce0806233cfbfddc568f384d90d019bdcc9263ec3f2e 1292 Packages.xz
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEGOu1PQn1hm9z65TPgUNfFY31B6AFAmqdgjYACgkQgUNfFY31
+B6CQTRAAl7QW6zdpM1KVGAgeD+J3opbB6YP5EXb/wUnxZa7p2+hDIEjqee+/i0JZ
+fzFzy9JzYPWWVj0aqW1KxWJw8NfZe+Of5ewFUpoz4Zn9W5ionrag5G5QMM9C6+EP
+hsKofm0Oo0/lTw3jwpgwgSxr5uZdVdoVQxJ4ee+B8/o1Bnr6jyBULceGBYDdGSL7
+U57BnVQTn/mYmqTXRDNRFekugbQG3E8u3G9i2OLOaX4d870lcOCPp07P7KDViWbj
+oMfZy298GlEv0MItjRrT22CGmLZpRME/CO/uGt9dYO4WMCAE64Qdk/lXBlC7IQa1
+TJs2o4jgFLUOUs6GKHOlpQykMAxgiR4oKi0Osp0bKZ7AEw9CVBdqG0Yysb79P9ex
+7RUH58RelNp6M3FWt/xlOFuykDCcrqfUJ0JeaM8jY8iU4lMSZM9VOrbNMzoKGLFi
+tfcGuYh9veu7GTzg5+jv/XARLjgVBSadPomc1q8jS2aeJp1ScPfHX5c0RMV72JY6
+pF2LKgfIy2de0agywx6BAuUALaJeIysT+DhaNo8A4G6D0k0Vpp8EpY1ewwvISVcN
+OTVBx/u3G3AWpQaS8yZtus4ck92mQhq+SeL7Aria2gZGcjXW5x5QEigmX8hKcEmk
+SX6jbX2PmF+jFhupMyOvjr+NvfNP3c2QtC51bLd5ku+ZR4/VUAU=
+=fHno
+-----END PGP SIGNATURE-----

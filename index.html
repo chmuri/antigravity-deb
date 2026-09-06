@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Antigravity - Debian/Ubuntu APT Repository</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --border: #334155;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-hover: #0284c7;
+      --code-bg: #090d16;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      margin: 0;
+      padding: 2rem 1rem;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+    p.lead {
+      font-size: 1.15rem;
+      color: var(--muted);
+    }
+    .card {
+      background-color: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+    }
+    h2 {
+      margin-top: 0;
+      font-size: 1.35rem;
+      color: var(--text);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.5rem;
+    }
+    pre {
+      background-color: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      overflow-x: auto;
+      font-size: 0.95rem;
+      color: #e2e8f0;
+    }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Google Antigravity APT Repository</h1>
+      <p class="lead">Official-grade automated Debian/Ubuntu packages for Google Antigravity 2.0 and Antigravity IDE</p>
+    </header>
+
+    <div class="card">
+      <h2>🚀 Quick Setup (Ubuntu / Debian)</h2>
+      <p>Run the following commands to add the GPG key and APT repository to your system:</p>
+      <pre><code># 1. Install prerequisites
+sudo apt-get update && sudo apt-get install -y ca-certificates curl gnupg
+
+# 2. Add the repository GPG key
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://chmuri.github.io/antigravity-deb/public.key | sudo gpg --dearmor -o /etc/apt/keyrings/antigravity.gpg
+sudo chmod a+r /etc/apt/keyrings/antigravity.gpg
+
+# 3. Add the APT source
+echo "deb [signed-by=/etc/apt/keyrings/antigravity.gpg] https://chmuri.github.io/antigravity-deb/ ./" | sudo tee /etc/apt/sources.list.d/antigravity.list
+
+# 4. Update and install Antigravity
+sudo apt-get update
+sudo apt-get install -y antigravity antigravity-ide</code></pre>
+    </div>
+
+    <div class="card">
+      <h2>📦 Available Packages</h2>
+      <ul>
+        <li><strong>antigravity</strong>: Google Antigravity 2.0 desktop agent platform</li>
+        <li><strong>antigravity-ide</strong>: Google Antigravity IDE development environment</li>
+      </ul>
+      <p>Direct download links and release changelogs are available on <a href="https://github.com/chmuri/antigravity-deb/releases" target="_blank">GitHub Releases</a>.</p>
+    </div>
+
+    <footer>
+      <p>Automated APT Repository &bull; Source on <a href="https://github.com/chmuri/antigravity-deb">GitHub</a></p>
+    </footer>
+  </div>
+</body>
+</html>
