@@ -87,12 +87,12 @@
   <div class="container">
     <header>
       <h1>Google Antigravity APT Repository</h1>
-      <p class="lead">Official-grade automated Debian/Ubuntu packages for Google Antigravity 2.0 and Antigravity IDE</p>
+      <p class="lead">Unofficial Debian/Ubuntu packages for Google Antigravity 2.0 (AI desktop agent) and Google Antigravity IDE (agentic coding IDE)</p>
     </header>
 
     <div class="card">
       <h2>Quick Setup (Ubuntu / Debian)</h2>
-      <p>Run the following commands to add the GPG key and APT repository to your system:</p>
+      <p>Run the following commands to add the GPG key and APT repository to your system (deb822 format):</p>
       <pre><code># 1. Install prerequisites
 sudo apt-get update &amp;&amp; sudo apt-get install -y ca-certificates curl gnupg
 
@@ -101,25 +101,43 @@ sudo install -m 0755 -d /etc/apt/keyrings
 curl -fsSL https://chmuri.github.io/antigravity-deb/public.key | sudo gpg --dearmor -o /etc/apt/keyrings/antigravity.gpg
 sudo chmod a+r /etc/apt/keyrings/antigravity.gpg
 
-# 3. Add the APT source (flat rolling repository)
-echo "deb [signed-by=/etc/apt/keyrings/antigravity.gpg] https://github.com/chmuri/antigravity-deb/releases/download/stable ./" | sudo tee /etc/apt/sources.list.d/antigravity.list
+# 3. Add the APT source (deb822 format, with a human-readable description)
+sudo tee /etc/apt/sources.list.d/antigravity.sources &gt; /dev/null &lt;&lt;'EOF'
+Types: deb
+URIs: https://github.com/chmuri/antigravity-deb/releases/download/stable
+Suites: ./
+Signed-By: /etc/apt/keyrings/antigravity.gpg
+Description: Google Antigravity (unofficial) - Antigravity 2.0 AI desktop agent and Antigravity IDE
+EOF
 
 # 4. Update and install Antigravity
 sudo apt-get update
 sudo apt-get install -y antigravity antigravity-ide</code></pre>
+      <p>Classic one-line alternative (.list):
+        <code>echo "deb [signed-by=/etc/apt/keyrings/antigravity.gpg] https://github.com/chmuri/antigravity-deb/releases/download/stable ./" | sudo tee /etc/apt/sources.list.d/antigravity.list</code>
+      </p>
     </div>
 
     <div class="card">
       <h2>Available Packages</h2>
       <ul>
-        <li><strong>antigravity</strong>: Google Antigravity 2.0 desktop agent platform</li>
-        <li><strong>antigravity-ide</strong>: Google Antigravity IDE development environment</li>
+        <li><strong>antigravity</strong> &mdash; Google Antigravity 2.0: autonomous AI desktop agent with sandbox isolation and system tray support. Launcher: <code>antigravity</code>.</li>
+        <li><strong>antigravity-ide</strong> &mdash; Google Antigravity IDE: agentic coding IDE with workspace context and GNOME Files integration. Launcher: <code>antigravity-ide</code>.</li>
       </ul>
-      <p>Direct download links and release changelogs are available on <a href="https://github.com/chmuri/antigravity-deb/releases" target="_blank">GitHub Releases</a>.</p>
+      <p>Direct download links, checksums and release changelogs are available on <a href="https://github.com/chmuri/antigravity-deb/releases" target="_blank">GitHub Releases</a>.</p>
+    </div>
+
+    <div class="card">
+      <h2>Security</h2>
+      <p>Repository metadata is signed with GPG key
+        <code>18EBB53D09F5866F73EB94CF81435F158DF507A0</code>.
+        The public key is served at
+        <a href="https://chmuri.github.io/antigravity-deb/public.key">chmuri.github.io/antigravity-deb/public.key</a>.
+        See the <a href="https://github.com/chmuri/antigravity-deb#readme">README</a> for the full documentation.</p>
     </div>
 
     <footer>
-      <p>Automated APT Repository &bull; Source on <a href="https://github.com/chmuri/antigravity-deb">GitHub</a></p>
+      <p>Unofficial Google Antigravity Debian/Ubuntu packages &bull; Source on <a href="https://github.com/chmuri/antigravity-deb">GitHub</a></p>
     </footer>
   </div>
 </body>
