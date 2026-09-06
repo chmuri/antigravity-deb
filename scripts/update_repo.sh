@@ -6,7 +6,7 @@
 # next to the generated metadata so that apt can resolve the relative
 # "Filename:" entries against the repository base URI:
 #
-#   deb [signed-by=...] https://github.com/chmuri/antigravity-deb/releases/download/apt ./
+#   deb [signed-by=...] https://github.com/chmuri/antigravity-deb/releases/download/stable ./
 #
 # Generates: Packages, Packages.gz, Release, InRelease, Release.gpg, index.html
 set -euo pipefail
@@ -89,12 +89,12 @@ DATE_STR="$(date -Ru)"
 
 {
   cat <<EOF
-Origin: Google Antigravity Repository
-Label: Antigravity Packages
+Origin: Google Antigravity (unofficial)
+Label: Google Antigravity APT Repository
 Suite: stable
 Codename: stable
 Date: $DATE_STR
-Description: Debian/Ubuntu APT repository for Google Antigravity 2.0 and Antigravity IDE
+Description: Unofficial Debian/Ubuntu repository that packages Google Antigravity 2.0 (autonomous AI desktop agent) and Google Antigravity IDE (agentic coding IDE) from official Google release tarballs. Architecture: amd64.
 MD5Sum:
  $(md5sum Packages | awk '{print $1 " "}')$(stat -c%s Packages) Packages
  $(md5sum Packages.gz | awk '{print $1 " "}')$(stat -c%s Packages.gz) Packages.gz
@@ -122,6 +122,7 @@ cat > index.html <<'HTML'
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Unofficial Debian/Ubuntu APT repository with packaged Google Antigravity 2.0 (AI desktop agent) and Google Antigravity IDE (agentic coding IDE). Install with apt-get install antigravity antigravity-ide.">
   <title>Google Antigravity - Debian/Ubuntu APT Repository</title>
   <style>
     :root {
@@ -220,7 +221,7 @@ curl -fsSL https://chmuri.github.io/antigravity-deb/public.key | sudo gpg --dear
 sudo chmod a+r /etc/apt/keyrings/antigravity.gpg
 
 # 3. Add the APT source (flat rolling repository)
-echo "deb [signed-by=/etc/apt/keyrings/antigravity.gpg] https://github.com/chmuri/antigravity-deb/releases/download/apt ./" | sudo tee /etc/apt/sources.list.d/antigravity.list
+echo "deb [signed-by=/etc/apt/keyrings/antigravity.gpg] https://github.com/chmuri/antigravity-deb/releases/download/stable ./" | sudo tee /etc/apt/sources.list.d/antigravity.list
 
 # 4. Update and install Antigravity
 sudo apt-get update

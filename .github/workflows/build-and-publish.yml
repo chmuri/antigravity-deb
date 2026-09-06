@@ -166,7 +166,7 @@ jobs:
           echo "Repository files prepared in repo-dist:"
           ls -la repo-dist/
 
-      - name: Publish Rolling APT Repository (GitHub Release 'apt')
+      - name: Publish Rolling APT Repository (GitHub Release 'stable')
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -174,7 +174,7 @@ jobs:
           FORCE_BUILD: ${{ inputs.force_build || 'false' }}
         run: |
           set -euo pipefail
-          APT_TAG="apt"
+          APT_TAG="stable"
 
           if [ ! -f repo-dist/Packages ] || [ "$(find repo-dist -maxdepth 1 -name '*.deb' | wc -l)" -eq 0 ]; then
             echo "::warning::No .deb packages found; skipping rolling repository publish."
@@ -185,9 +185,9 @@ jobs:
           if ! gh release view "$APT_TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             gh release create "$APT_TAG" \
               --repo "$GITHUB_REPOSITORY" \
-              --title "APT Rolling Repository (flat)" \
-              --notes "Flat Debian/Ubuntu APT repository. Add with:
-                 deb [signed-by=/etc/apt/keyrings/antigravity.gpg] https://github.com/$GITHUB_REPOSITORY/releases/download/apt ./
+              --title "Google Antigravity APT Repository (stable)" \
+              --notes "Rolling Debian/Ubuntu APT repository for Google Antigravity 2.0 and Antigravity IDE. Add with:
+                 deb [signed-by=/etc/apt/keyrings/antigravity.gpg] https://github.com/$GITHUB_REPOSITORY/releases/download/stable ./
                  Do not delete this release."
           fi
 

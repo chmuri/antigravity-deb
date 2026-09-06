@@ -22,7 +22,7 @@ notes = f"""### {title} (Debian/Ubuntu package)
 ```bash
 # Add repository
 curl -fsSL https://chmuri.github.io/antigravity-deb/public.key | sudo gpg --dearmor -o /etc/apt/keyrings/antigravity.gpg
-echo "deb [signed-by=/etc/apt/keyrings/antigravity.gpg] https://github.com/chmuri/antigravity-deb/releases/download/apt ./" | sudo tee /etc/apt/sources.list.d/antigravity.list
+echo "deb [signed-by=/etc/apt/keyrings/antigravity.gpg] https://github.com/chmuri/antigravity-deb/releases/download/stable ./" | sudo tee /etc/apt/sources.list.d/antigravity.list
 sudo apt-get update
 sudo apt-get install -y {pkg}
 ```
