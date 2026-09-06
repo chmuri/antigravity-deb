@@ -25,8 +25,8 @@ sudo install -m 0755 -d /etc/apt/keyrings
 curl -fsSL https://chmuri.github.io/antigravity-deb/public.key | sudo gpg --dearmor -o /etc/apt/keyrings/antigravity.gpg
 sudo chmod a+r /etc/apt/keyrings/antigravity.gpg
 
-# 3. Add the APT source repository (stable main)
-echo "deb [signed-by=/etc/apt/keyrings/antigravity.gpg] https://chmuri.github.io/antigravity-deb stable main" | sudo tee /etc/apt/sources.list.d/antigravity.list
+# 3. Add the APT source repository (flat rolling repository on GitHub Releases)
+echo "deb [signed-by=/etc/apt/keyrings/antigravity.gpg] https://github.com/chmuri/antigravity-deb/releases/download/apt ./" | sudo tee /etc/apt/sources.list.d/antigravity.list
 
 # 4. Update index and install
 sudo apt-get update
@@ -35,7 +35,7 @@ sudo apt-get install -y antigravity antigravity-ide
 
 ### ⚡ One-Liner Setup
 ```bash
-curl -fsSL https://chmuri.github.io/antigravity-deb/public.key | sudo gpg --dearmor -o /etc/apt/keyrings/antigravity.gpg && sudo chmod a+r /etc/apt/keyrings/antigravity.gpg && echo "deb [signed-by=/etc/apt/keyrings/antigravity.gpg] https://chmuri.github.io/antigravity-deb stable main" | sudo tee /etc/apt/sources.list.d/antigravity.list && sudo apt-get update
+curl -fsSL https://chmuri.github.io/antigravity-deb/public.key | sudo gpg --dearmor -o /etc/apt/keyrings/antigravity.gpg && sudo chmod a+r /etc/apt/keyrings/antigravity.gpg && echo "deb [signed-by=/etc/apt/keyrings/antigravity.gpg] https://github.com/chmuri/antigravity-deb/releases/download/apt ./" | sudo tee /etc/apt/sources.list.d/antigravity.list && sudo apt-get update
 ```
 
 ---
@@ -98,9 +98,10 @@ Google Upstream (antigravity.google/download)
 GitHub Actions (Runs 2x daily: 04:00 & 16:00 UTC)
         ├─► discover_versions.py (Detects new versions & historical releases)
         ├─► build_deb.sh         (Packages .deb according to Debian policy)
-        ├─► GitHub Releases     (Stores heavy .deb binary assets & SHA256 checksums)
-        ├─► update_repo.sh       (Builds Packages.gz, Release, signs InRelease with GPG)
-        └─► GitHub Pages (gh-pages) (Serves signed APT repository indexes & public.key)
+        ├─► Per-version GitHub Releases (Store heavy .deb binaries & SHA256 checksums)
+        ├─► update_repo.sh       (Builds flat Packages/Release, signs InRelease with GPG)
+        └─► Rolling GitHub Release tag "apt"
+               (Serves .deb files + signed flat repository indexes)
                 │
                 ▼
 Ubuntu / Debian Clients (apt-get update && apt-get install antigravity)
@@ -108,8 +109,9 @@ Ubuntu / Debian Clients (apt-get update && apt-get install antigravity)
 
 1. **Version Discovery**: `discover_versions.py` parses `https://antigravity.google/download` and bundle JavaScript for official Google releases. It also indexes historical versions using Wayback Machine CDX API snapshots.
 2. **Debian Packaging**: `build_deb.sh` extracts upstream tarballs, stages application files into `/opt/antigravity*`, sets `chrome-sandbox` SUID `4755` permissions, extracts high-resolution icons from `app.asar`, installs desktop entry files into `/usr/share/applications/`, and compiles `.deb` archives with `dpkg-deb`.
-3. **Release Hosting**: Due to GitHub Pages file size limits (100 MB max), packages (130–180 MB) are published to **GitHub Releases**. The APT repository `Packages` index references direct HTTPS asset download URLs.
-4. **Signature & Distribution**: `update_repo.sh` generates `Packages.gz`, `Packages.xz`, `Release`, signs `InRelease` with GPG, and deploys metadata to GitHub Pages.
+3. **Release Hosting**: GitHub Pages rejects files over 100 MB, so the packages (130–180 MB) are hosted as **GitHub Release assets**. Because GitHub Release assets are stored flat (no subdirectories), the APT repository is published as a **flat repository** on a stable, rolling release tag (`apt`). `update_repo.sh` writes a relative `Filename:` (the `.deb` basename) into `Packages`, so `apt` resolves every download against the release-tag base URI — no cross-host URL tricks required.
+4. **Signature & Distribution**: `update_repo.sh` generates `Packages`, `Packages.gz`, `Release`, and signs `InRelease` with GPG. Everything (`.deb` files plus signed indexes) is uploaded to the rolling `apt` release tag — the index and binaries always stay on the same host.
+5. **Public Key**: `public.key` and a human-friendly landing page are published to **GitHub Pages** for keyring setup and browsing.
 
 ---
 
@@ -136,7 +138,11 @@ docker run --rm -v $(pwd)/dist:/output antigravity-deb-builder build-all
 ```bash
 docker compose up -d
 ```
-The local APT repository will be accessible at `http://localhost:8080/`.
+The local APT repository will be accessible at `http://localhost:8080/`. To test it as a flat repository:
+```bash
+echo "deb [trusted=yes] http://localhost:8080/ ./" | sudo tee /etc/apt/sources.list.d/antigravity-local.list
+sudo apt-get update && sudo apt-get install -y antigravity
+```
 
 ---
 

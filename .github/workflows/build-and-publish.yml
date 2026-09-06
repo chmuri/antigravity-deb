@@ -147,35 +147,87 @@ jobs:
 
           echo "built_count=$BUILT_COUNT" >> "$GITHUB_OUTPUT"
 
-      - name: Fetch existing APT repository indexes from gh-pages
-        run: |
-          mkdir -p repo-dist
-          curl -fsSL "https://chmuri.github.io/antigravity-deb/Packages" -o repo-dist/Packages.old 2>/dev/null || true
-          curl -fsSL "https://chmuri.github.io/antigravity-deb/public.key" -o repo-dist/public.key 2>/dev/null || cp -f public.key repo-dist/public.key
-
-      - name: Generate and Sign APT Repository Metadata
+      - name: Generate Flat APT Repository Metadata
         env:
           GPG_KEY_ID: ${{ secrets.GPG_KEY_ID || '18EBB53D09F5866F73EB94CF81435F158DF507A0' }}
-          GITHUB_REPO: ${{ github.repository }}
         run: |
+          mkdir -p repo-dist
+
           if [ -d deb-dist ] && [ "$(find deb-dist -name "*.deb" | wc -l)" -gt 0 ]; then
             cp -f deb-dist/*.deb repo-dist/
           fi
 
+          # Pull every historical .deb from the per-version release tags so the
+          # flat index stays cumulative across runs.
           python3 scripts/sync_release_assets.py repo-dist
 
           bash scripts/update_repo.sh repo-dist
 
-          rm -f repo-dist/*.deb
-
           echo "Repository files prepared in repo-dist:"
           ls -la repo-dist/
 
-      - name: Deploy to GitHub Pages (gh-pages)
+      - name: Publish Rolling APT Repository (GitHub Release 'apt')
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          FORCE_BUILD: ${{ inputs.force_build || 'false' }}
+        run: |
+          set -euo pipefail
+          APT_TAG="apt"
+
+          if [ ! -f repo-dist/Packages ] || [ "$(find repo-dist -maxdepth 1 -name '*.deb' | wc -l)" -eq 0 ]; then
+            echo "::warning::No .deb packages found; skipping rolling repository publish."
+            exit 0
+          fi
+
+          # Create the rolling release once; afterwards it is only updated in place.
+          if ! gh release view "$APT_TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release create "$APT_TAG" \
+              --repo "$GITHUB_REPOSITORY" \
+              --title "APT Rolling Repository (flat)" \
+              --notes "Flat Debian/Ubuntu APT repository. Add with:
+                 deb [signed-by=/etc/apt/keyrings/antigravity.gpg] https://github.com/$GITHUB_REPOSITORY/releases/download/apt ./
+                 Do not delete this release."
+          fi
+
+          # Upload only .deb assets that are not yet present on the rolling
+          # release (all are re-uploaded when a forced rebuild is requested).
+          mapfile -t EXISTING < <(gh release view "$APT_TAG" --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name' 2>/dev/null || true)
+
+          for deb in repo-dist/*.deb; do
+            [ -f "$deb" ] || continue
+            name="$(basename "$deb")"
+            if [ "$FORCE_BUILD" = "true" ] || ! printf '%s\n' "${EXISTING[@]}" | grep -qxF "$name"; then
+              echo ">>> Uploading $name to $APT_TAG"
+              gh release upload "$APT_TAG" "$deb" --repo "$GITHUB_REPOSITORY" --clobber
+            else
+              echo ">>> Skipping $name (already present on $APT_TAG)"
+            fi
+          done
+
+          # Metadata last: package index before the signed Release so apt never
+          # sees a Release whose checksums are not yet satisfied.
+          gh release upload "$APT_TAG" repo-dist/Packages repo-dist/Packages.gz \
+            --repo "$GITHUB_REPOSITORY" --clobber
+          gh release upload "$APT_TAG" repo-dist/Release repo-dist/Release.gpg repo-dist/InRelease \
+            --repo "$GITHUB_REPOSITORY" --clobber
+
+          echo "Rolling APT repository published at:"
+          echo "  https://github.com/$GITHUB_REPOSITORY/releases/download/$APT_TAG/"
+
+      - name: Deploy Public Key & Landing Page to GitHub Pages (gh-pages)
+        run: |
+          mkdir -p pages-dist
+          cp -f repo-dist/public.key pages-dist/public.key
+          cp -f repo-dist/index.html pages-dist/index.html
+          ls -la pages-dist/
+
+      - name: Publish to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./repo-dist
+          publish_dir: ./pages-dist
           publish_branch: gh-pages
           user_name: 'github-actions[bot]'
           user_email: 'github-actions[bot]@users.noreply.github.com'
