@@ -90,18 +90,18 @@
     </header>
 
     <div class="card">
-      <h2>🚀 Quick Setup (Ubuntu / Debian)</h2>
+      <h2>Quick Setup (Ubuntu / Debian)</h2>
       <p>Run the following commands to add the GPG key and APT repository to your system:</p>
       <pre><code># 1. Install prerequisites
-sudo apt-get update && sudo apt-get install -y ca-certificates curl gnupg
+sudo apt-get update &amp;&amp; sudo apt-get install -y ca-certificates curl gnupg
 
 # 2. Add the repository GPG key
 sudo install -m 0755 -d /etc/apt/keyrings
 curl -fsSL https://chmuri.github.io/antigravity-deb/public.key | sudo gpg --dearmor -o /etc/apt/keyrings/antigravity.gpg
 sudo chmod a+r /etc/apt/keyrings/antigravity.gpg
 
-# 3. Add the APT source (stable)
-echo "deb [signed-by=/etc/apt/keyrings/antigravity.gpg] https://chmuri.github.io/antigravity-deb stable main" | sudo tee /etc/apt/sources.list.d/antigravity.list
+# 3. Add the APT source (flat rolling repository)
+echo "deb [signed-by=/etc/apt/keyrings/antigravity.gpg] https://github.com/chmuri/antigravity-deb/releases/download/apt ./" | sudo tee /etc/apt/sources.list.d/antigravity.list
 
 # 4. Update and install Antigravity
 sudo apt-get update
@@ -109,7 +109,7 @@ sudo apt-get install -y antigravity antigravity-ide</code></pre>
     </div>
 
     <div class="card">
-      <h2>📦 Available Packages</h2>
+      <h2>Available Packages</h2>
       <ul>
         <li><strong>antigravity</strong>: Google Antigravity 2.0 desktop agent platform</li>
         <li><strong>antigravity-ide</strong>: Google Antigravity IDE development environment</li>
